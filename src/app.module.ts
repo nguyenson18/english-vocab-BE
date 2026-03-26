@@ -20,27 +20,31 @@ import { AppService } from './app.service';
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.getOrThrow<string>('DB_HOST'),
-        port: config.get<number>('DB_PORT', 5432),
-        username: config.getOrThrow<string>('DB_USER'),
-        password: config.getOrThrow<string>('DB_PASS'),
-        database: config.getOrThrow<string>('DB_NAME'),
-        entities: [
-          Topic,
-          Vocabulary,
-          QuizAttempt,
-          QuizAttemptDetail,
-          UserVocabularyProgress,
-        ],
-        synchronize: true,
-        logging: true,
-        ssl:
-          config.get<string>('DB_SSL') === 'true'
-            ? { rejectUnauthorized: false }
-            : false,
-      }),
+      useFactory: (config: ConfigService) => {
+        const databaseUrl = config.get<string>('DATABASE_URL');
+        return {
+          url: databaseUrl || undefined,
+          type: 'postgres',
+          host: config.getOrThrow<string>('DB_HOST'),
+          port: config.get<number>('DB_PORT', 5432),
+          username: config.getOrThrow<string>('DB_USER'),
+          password: config.getOrThrow<string>('DB_PASS'),
+          database: config.getOrThrow<string>('DB_NAME'),
+          entities: [
+            Topic,
+            Vocabulary,
+            QuizAttempt,
+            QuizAttemptDetail,
+            UserVocabularyProgress,
+          ],
+          synchronize: true,
+          logging: true,
+          ssl:
+            config.get<string>('DB_SSL') === 'true'
+              ? { rejectUnauthorized: false }
+              : false,
+        }
+      },
     }),
     TopicsModule,
     VocabulariesModule,
