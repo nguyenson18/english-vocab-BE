@@ -6,8 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Vocabulary } from '../../vocabularies/entities/vocabulary.entity';
+import { Conversation } from '../../conversations/entities/conversation.entity';
+import { Passage } from '../../passages/entities/passage.entity';
 import { QuizAttempt } from '../../quiz/entities/quiz-attempt.entity';
+import { Vocabulary } from '../../vocabularies/entities/vocabulary.entity';
 
 @Entity('topics')
 export class Topic {
@@ -25,6 +27,12 @@ export class Topic {
 
   @OneToMany(() => Vocabulary, (vocabulary) => vocabulary.topic)
   vocabularies: Vocabulary[];
+
+  @OneToMany(() => Conversation, (conversation) => conversation.topic)
+  conversations: Conversation[];
+
+  @OneToMany(() => Passage, (passage) => passage.topic)
+  passages: Passage[];
 
   @OneToMany(() => QuizAttempt, (quizAttempt) => quizAttempt.topic)
   quizAttempts: QuizAttempt[];

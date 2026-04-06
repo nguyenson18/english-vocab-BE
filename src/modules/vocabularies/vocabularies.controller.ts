@@ -8,75 +8,52 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { VocabulariesService } from './vocabularies.service';
+import { ResponseMessage } from '../../common/interceptors/response-message.decorator';
 import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
-import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 import { QueryVocabularyDto } from './dto/query-vocabulary.dto';
+import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
+import { VocabulariesService } from './vocabularies.service';
 
 @Controller('vocabularies')
 export class VocabulariesController {
   constructor(private readonly vocabulariesService: VocabulariesService) {}
 
   @Post()
-  async create(@Body() createVocabularyDto: CreateVocabularyDto) {
-    const data = await this.vocabulariesService.create(createVocabularyDto);
-    return {
-      success: true,
-      message: 'Vocabulary created successfully',
-      data,
-    };
+  @ResponseMessage('Vocabulary created successfully')
+  create(@Body() createVocabularyDto: CreateVocabularyDto) {
+    return this.vocabulariesService.create(createVocabularyDto);
   }
 
   @Get()
-  async findAll(@Query() query: QueryVocabularyDto) {
-    const data = await this.vocabulariesService.findAll(query);
-    return {
-      success: true,
-      message: 'Vocabularies fetched successfully',
-      data,
-    };
+  @ResponseMessage('Vocabularies fetched successfully')
+  findAll(@Query() query: QueryVocabularyDto) {
+    return this.vocabulariesService.findAll(query);
   }
 
   @Get('topic/:topicId')
-  async findByTopic(@Param('topicId') topicId: string) {
-    const data = await this.vocabulariesService.findByTopic(topicId);
-    return {
-      success: true,
-      message: 'Topic vocabularies fetched successfully',
-      data,
-    };
+  @ResponseMessage('Topic vocabularies fetched successfully')
+  findByTopic(@Param('topicId') topicId: string) {
+    return this.vocabulariesService.findByTopic(topicId);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const data = await this.vocabulariesService.findOne(id);
-    return {
-      success: true,
-      message: 'Vocabulary fetched successfully',
-      data,
-    };
+  @ResponseMessage('Vocabulary fetched successfully')
+  findOne(@Param('id') id: string) {
+    return this.vocabulariesService.findOne(id);
   }
 
   @Patch(':id')
-  async update(
+  @ResponseMessage('Vocabulary updated successfully')
+  update(
     @Param('id') id: string,
     @Body() updateVocabularyDto: UpdateVocabularyDto,
   ) {
-    const data = await this.vocabulariesService.update(id, updateVocabularyDto);
-    return {
-      success: true,
-      message: 'Vocabulary updated successfully',
-      data,
-    };
+    return this.vocabulariesService.update(id, updateVocabularyDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
-    const data = await this.vocabulariesService.remove(id);
-    return {
-      success: true,
-      message: 'Vocabulary deleted successfully',
-      data,
-    };
+  @ResponseMessage('Vocabulary deleted successfully')
+  remove(@Param('id') id: string) {
+    return this.vocabulariesService.remove(id);
   }
 }

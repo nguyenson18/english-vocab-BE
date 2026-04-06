@@ -11,54 +11,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProgressController = void 0;
 const common_1 = require("@nestjs/common");
+const response_message_decorator_1 = require("../../common/interceptors/response-message.decorator");
 const progress_service_1 = require("./progress.service");
 let ProgressController = class ProgressController {
     constructor(progressService) {
         this.progressService = progressService;
     }
-    async getOverview() {
-        const data = await this.progressService.getOverview();
-        return {
-            success: true,
-            message: 'Progress overview fetched successfully',
-            data,
-        };
+    getOverview() {
+        return this.progressService.getOverview();
     }
-    async getWrongWords() {
-        const data = await this.progressService.getWrongWords();
-        return {
-            success: true,
-            message: 'Wrong words fetched successfully',
-            data,
-        };
+    getWrongWords() {
+        return this.progressService.getWrongWords();
     }
-    async getReviewDue() {
-        const data = await this.progressService.getReviewDue();
-        return {
-            success: true,
-            message: 'Review due words fetched successfully',
-            data,
-        };
+    getReviewDue() {
+        return this.progressService.getReviewDue();
     }
 };
 exports.ProgressController = ProgressController;
 __decorate([
     (0, common_1.Get)('overview'),
+    (0, response_message_decorator_1.ResponseMessage)('Progress overview fetched successfully'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getOverview", null);
 __decorate([
     (0, common_1.Get)('wrong-words'),
+    (0, response_message_decorator_1.ResponseMessage)('Wrong words fetched successfully'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getWrongWords", null);
 __decorate([
     (0, common_1.Get)('review-due'),
+    (0, response_message_decorator_1.ResponseMessage)('Review due words fetched successfully'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], ProgressController.prototype, "getReviewDue", null);
 exports.ProgressController = ProgressController = __decorate([
     (0, common_1.Controller)('progress'),

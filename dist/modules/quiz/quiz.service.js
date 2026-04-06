@@ -67,7 +67,7 @@ let QuizService = class QuizService {
                 continue;
             }
             const normalizedUserAnswer = answer.userAnswer.trim().toLowerCase();
-            const normalizedCorrectAnswer = vocabulary.vietnameseMeaning.trim().toLowerCase();
+            const normalizedCorrectAnswer = vocabulary.englishWord.trim().toLowerCase();
             const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
             if (isCorrect) {
                 correctAnswers += 1;

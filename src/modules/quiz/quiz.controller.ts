@@ -1,49 +1,34 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { QuizService } from './quiz.service';
+import { ResponseMessage } from '../../common/interceptors/response-message.decorator';
 import { StartQuizDto } from './dto/start-quiz.dto';
 import { SubmitQuizDto } from './dto/submit-quiz.dto';
+import { QuizService } from './quiz.service';
 
 @Controller('quiz')
 export class QuizController {
   constructor(private readonly quizService: QuizService) {}
 
   @Post('start')
-  async startQuiz(@Body() startQuizDto: StartQuizDto) {
-    const data = await this.quizService.startQuiz(startQuizDto);
-    return {
-      success: true,
-      message: 'Quiz generated successfully',
-      data,
-    };
+  @ResponseMessage('Quiz generated successfully')
+  startQuiz(@Body() startQuizDto: StartQuizDto) {
+    return this.quizService.startQuiz(startQuizDto);
   }
 
   @Post('submit')
-  async submitQuiz(@Body() submitQuizDto: SubmitQuizDto) {
-    const data = await this.quizService.submitQuiz(submitQuizDto);
-    return {
-      success: true,
-      message: 'Quiz submitted successfully',
-      data,
-    };
+  @ResponseMessage('Quiz submitted successfully')
+  submitQuiz(@Body() submitQuizDto: SubmitQuizDto) {
+    return this.quizService.submitQuiz(submitQuizDto);
   }
 
   @Get('history')
-  async getHistory() {
-    const data = await this.quizService.getHistory();
-    return {
-      success: true,
-      message: 'Quiz history fetched successfully',
-      data,
-    };
+  @ResponseMessage('Quiz history fetched successfully')
+  getHistory() {
+    return this.quizService.getHistory();
   }
 
   @Get('history/:id')
-  async getHistoryDetail(@Param('id') id: string) {
-    const data = await this.quizService.getHistoryDetail(id);
-    return {
-      success: true,
-      message: 'Quiz history detail fetched successfully',
-      data,
-    };
+  @ResponseMessage('Quiz history detail fetched successfully')
+  getHistoryDetail(@Param('id') id: string) {
+    return this.quizService.getHistoryDetail(id);
   }
 }

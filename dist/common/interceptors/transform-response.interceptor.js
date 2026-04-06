@@ -24,22 +24,14 @@ let TransformResponseInterceptor = class TransformResponseInterceptor {
         const req = httpCtx.getRequest();
         const customMessage = this.reflector.get(response_message_decorator_1.RESPONSE_MESSAGE_KEY, context.getHandler()) ||
             this.reflector.get(response_message_decorator_1.RESPONSE_MESSAGE_KEY, context.getClass());
-        return next.handle().pipe((0, operators_1.map)((data) => {
-            if (data &&
-                typeof data === 'object' &&
-                data.success === true &&
-                'statusCode' in data) {
-                return data;
-            }
-            return {
-                success: true,
-                statusCode: res.statusCode,
-                message: customMessage || 'OK',
-                data,
-                path: req.originalUrl,
-                timestamp: new Date().toISOString(),
-            };
-        }));
+        return next.handle().pipe((0, operators_1.map)((data) => ({
+            success: true,
+            statusCode: res.statusCode,
+            message: customMessage || 'OK',
+            data,
+            path: req.originalUrl,
+            timestamp: new Date().toISOString(),
+        })));
     }
 };
 exports.TransformResponseInterceptor = TransformResponseInterceptor;

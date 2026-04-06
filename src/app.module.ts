@@ -1,17 +1,22 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TopicsModule } from './modules/topics/topics.module';
-import { VocabulariesModule } from './modules/vocabularies/vocabularies.module';
-import { QuizModule } from './modules/quiz/quiz.module';
-import { ProgressModule } from './modules/progress/progress.module';
-import { Topic } from './modules/topics/entities/topic.entity';
-import { Vocabulary } from './modules/vocabularies/entities/vocabulary.entity';
-import { QuizAttempt } from './modules/quiz/entities/quiz-attempt.entity';
-import { QuizAttemptDetail } from './modules/quiz/entities/quiz-attempt-detail.entity';
-import { UserVocabularyProgress } from './modules/progress/entities/user-vocabulary-progress.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { Conversation } from './modules/conversations/entities/conversation.entity';
+import { ConversationLine } from './modules/conversations/entities/conversation-line.entity';
+import { ConversationsModule } from './modules/conversations/conversations.module';
+import { Passage } from './modules/passages/entities/passage.entity';
+import { PassagesModule } from './modules/passages/passages.module';
+import { UserVocabularyProgress } from './modules/progress/entities/user-vocabulary-progress.entity';
+import { ProgressModule } from './modules/progress/progress.module';
+import { QuizAttemptDetail } from './modules/quiz/entities/quiz-attempt-detail.entity';
+import { QuizAttempt } from './modules/quiz/entities/quiz-attempt.entity';
+import { QuizModule } from './modules/quiz/quiz.module';
+import { Topic } from './modules/topics/entities/topic.entity';
+import { TopicsModule } from './modules/topics/topics.module';
+import { Vocabulary } from './modules/vocabularies/entities/vocabulary.entity';
+import { VocabulariesModule } from './modules/vocabularies/vocabularies.module';
 
 @Module({
   imports: [
@@ -33,6 +38,9 @@ import { AppService } from './app.service';
           entities: [
             Topic,
             Vocabulary,
+            Conversation,
+            ConversationLine,
+            Passage,
             QuizAttempt,
             QuizAttemptDetail,
             UserVocabularyProgress,
@@ -43,15 +51,17 @@ import { AppService } from './app.service';
             config.get<string>('DB_SSL') === 'true'
               ? { rejectUnauthorized: false }
               : false,
-        }
+        };
       },
     }),
     TopicsModule,
     VocabulariesModule,
+    ConversationsModule,
+    PassagesModule,
     QuizModule,
     ProgressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

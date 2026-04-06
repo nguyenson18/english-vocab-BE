@@ -14,89 +14,70 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TopicsController = void 0;
 const common_1 = require("@nestjs/common");
-const topics_service_1 = require("./topics.service");
+const response_message_decorator_1 = require("../../common/interceptors/response-message.decorator");
 const create_topic_dto_1 = require("./dto/create-topic.dto");
 const update_topic_dto_1 = require("./dto/update-topic.dto");
+const topics_service_1 = require("./topics.service");
 let TopicsController = class TopicsController {
     constructor(topicsService) {
         this.topicsService = topicsService;
     }
-    async create(createTopicDto) {
-        const data = await this.topicsService.create(createTopicDto);
-        return {
-            success: true,
-            message: 'Topic created successfully',
-            data,
-        };
+    create(createTopicDto) {
+        return this.topicsService.create(createTopicDto);
     }
-    async findAll() {
-        const data = await this.topicsService.findAll();
-        return {
-            success: true,
-            message: 'Topics fetched successfully',
-            data,
-        };
+    findAll() {
+        return this.topicsService.findAll();
     }
-    async findOne(id) {
-        const data = await this.topicsService.findOne(id);
-        return {
-            success: true,
-            message: 'Topic fetched successfully',
-            data,
-        };
+    findOne(id) {
+        return this.topicsService.findOne(id);
     }
-    async update(id, updateTopicDto) {
-        const data = await this.topicsService.update(id, updateTopicDto);
-        return {
-            success: true,
-            message: 'Topic updated successfully',
-            data,
-        };
+    update(id, updateTopicDto) {
+        return this.topicsService.update(id, updateTopicDto);
     }
-    async remove(id) {
-        const data = await this.topicsService.remove(id);
-        return {
-            success: true,
-            message: 'Topic deleted successfully',
-            data,
-        };
+    remove(id) {
+        return this.topicsService.remove(id);
     }
 };
 exports.TopicsController = TopicsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, response_message_decorator_1.ResponseMessage)('Topic created successfully'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_topic_dto_1.CreateTopicDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], TopicsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, response_message_decorator_1.ResponseMessage)('Topics fetched successfully'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], TopicsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Topic fetched successfully'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], TopicsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Topic updated successfully'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_topic_dto_1.UpdateTopicDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], TopicsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Topic deleted successfully'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], TopicsController.prototype, "remove", null);
 exports.TopicsController = TopicsController = __decorate([
     (0, common_1.Controller)('topics'),

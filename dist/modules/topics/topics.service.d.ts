@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { Topic } from './entities/topic.entity';
 import { CreateTopicDto } from './dto/create-topic.dto';
+import { Topic } from './entities/topic.entity';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 export declare class TopicsService {
     private readonly topicRepository;

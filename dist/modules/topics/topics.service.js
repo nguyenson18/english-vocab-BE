@@ -39,6 +39,8 @@ let TopicsService = class TopicsService {
             order: { createdAt: 'DESC' },
             relations: {
                 vocabularies: true,
+                conversations: true,
+                passages: true,
             },
         });
     }
@@ -47,6 +49,8 @@ let TopicsService = class TopicsService {
             where: { id },
             relations: {
                 vocabularies: true,
+                conversations: true,
+                passages: true,
             },
         });
         if (!topic) {

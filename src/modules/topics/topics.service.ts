@@ -1,12 +1,12 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
-  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Topic } from './entities/topic.entity';
 import { CreateTopicDto } from './dto/create-topic.dto';
+import { Topic } from './entities/topic.entity';
 import { UpdateTopicDto } from './dto/update-topic.dto';
 
 @Injectable()
@@ -38,6 +38,8 @@ export class TopicsService {
       order: { createdAt: 'DESC' },
       relations: {
         vocabularies: true,
+        conversations: true,
+        passages: true,
       },
     });
   }
@@ -47,6 +49,8 @@ export class TopicsService {
       where: { id },
       relations: {
         vocabularies: true,
+        conversations: true,
+        passages: true,
       },
     });
 

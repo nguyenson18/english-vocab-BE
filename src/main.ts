@@ -1,10 +1,9 @@
 import { ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { NestFactory, Reflector } from '@nestjs/core';
 import helmet from 'helmet';
+import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 import { TransformResponseInterceptor } from './common/interceptors/transform-response.interceptor';
-import { Reflector } from '@nestjs/core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,11 +20,12 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new AllExceptionsFilter());
-  app.enableCors({ origin: true, credentials: true });
+  app.useGlobalInterceptors(
+    new TransformResponseInterceptor(app.get(Reflector)),
+  );
 
-  const reflector = app.get(Reflector);
-  app.useGlobalInterceptors(new TransformResponseInterceptor(reflector));
   const port = Number(process.env.PORT) || 3001;
   await app.listen(port, '0.0.0.0');
 }
+
 bootstrap();

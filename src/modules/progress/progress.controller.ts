@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { ResponseMessage } from '../../common/interceptors/response-message.decorator';
 import { ProgressService } from './progress.service';
 
 @Controller('progress')
@@ -6,32 +7,20 @@ export class ProgressController {
   constructor(private readonly progressService: ProgressService) {}
 
   @Get('overview')
-  async getOverview() {
-    const data = await this.progressService.getOverview();
-    return {
-      success: true,
-      message: 'Progress overview fetched successfully',
-      data,
-    };
+  @ResponseMessage('Progress overview fetched successfully')
+  getOverview() {
+    return this.progressService.getOverview();
   }
 
   @Get('wrong-words')
-  async getWrongWords() {
-    const data = await this.progressService.getWrongWords();
-    return {
-      success: true,
-      message: 'Wrong words fetched successfully',
-      data,
-    };
+  @ResponseMessage('Wrong words fetched successfully')
+  getWrongWords() {
+    return this.progressService.getWrongWords();
   }
 
   @Get('review-due')
-  async getReviewDue() {
-    const data = await this.progressService.getReviewDue();
-    return {
-      success: true,
-      message: 'Review due words fetched successfully',
-      data,
-    };
+  @ResponseMessage('Review due words fetched successfully')
+  getReviewDue() {
+    return this.progressService.getReviewDue();
   }
 }

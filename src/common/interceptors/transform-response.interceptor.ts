@@ -23,25 +23,14 @@ export class TransformResponseInterceptor implements NestInterceptor {
       this.reflector.get<string>(RESPONSE_MESSAGE_KEY, context.getClass());
 
     return next.handle().pipe(
-      map((data) => {
-        if (
-          data &&
-          typeof data === 'object' &&
-          data.success === true &&
-          'statusCode' in data
-        ) {
-          return data;
-        }
-
-        return {
-          success: true,
-          statusCode: res.statusCode,
-          message: customMessage || 'OK',
-          data,
-          path: req.originalUrl,
-          timestamp: new Date().toISOString(),
-        };
-      }),
+      map((data) => ({
+        success: true,
+        statusCode: res.statusCode,
+        message: customMessage || 'OK',
+        data,
+        path: req.originalUrl,
+        timestamp: new Date().toISOString(),
+      })),
     );
   }
 }

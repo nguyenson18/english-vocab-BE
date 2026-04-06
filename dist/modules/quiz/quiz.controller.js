@@ -14,73 +14,58 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizController = void 0;
 const common_1 = require("@nestjs/common");
-const quiz_service_1 = require("./quiz.service");
+const response_message_decorator_1 = require("../../common/interceptors/response-message.decorator");
 const start_quiz_dto_1 = require("./dto/start-quiz.dto");
 const submit_quiz_dto_1 = require("./dto/submit-quiz.dto");
+const quiz_service_1 = require("./quiz.service");
 let QuizController = class QuizController {
     constructor(quizService) {
         this.quizService = quizService;
     }
-    async startQuiz(startQuizDto) {
-        const data = await this.quizService.startQuiz(startQuizDto);
-        return {
-            success: true,
-            message: 'Quiz generated successfully',
-            data,
-        };
+    startQuiz(startQuizDto) {
+        return this.quizService.startQuiz(startQuizDto);
     }
-    async submitQuiz(submitQuizDto) {
-        const data = await this.quizService.submitQuiz(submitQuizDto);
-        return {
-            success: true,
-            message: 'Quiz submitted successfully',
-            data,
-        };
+    submitQuiz(submitQuizDto) {
+        return this.quizService.submitQuiz(submitQuizDto);
     }
-    async getHistory() {
-        const data = await this.quizService.getHistory();
-        return {
-            success: true,
-            message: 'Quiz history fetched successfully',
-            data,
-        };
+    getHistory() {
+        return this.quizService.getHistory();
     }
-    async getHistoryDetail(id) {
-        const data = await this.quizService.getHistoryDetail(id);
-        return {
-            success: true,
-            message: 'Quiz history detail fetched successfully',
-            data,
-        };
+    getHistoryDetail(id) {
+        return this.quizService.getHistoryDetail(id);
     }
 };
 exports.QuizController = QuizController;
 __decorate([
     (0, common_1.Post)('start'),
+    (0, response_message_decorator_1.ResponseMessage)('Quiz generated successfully'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [start_quiz_dto_1.StartQuizDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], QuizController.prototype, "startQuiz", null);
 __decorate([
     (0, common_1.Post)('submit'),
+    (0, response_message_decorator_1.ResponseMessage)('Quiz submitted successfully'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [submit_quiz_dto_1.SubmitQuizDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], QuizController.prototype, "submitQuiz", null);
 __decorate([
     (0, common_1.Get)('history'),
+    (0, response_message_decorator_1.ResponseMessage)('Quiz history fetched successfully'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], QuizController.prototype, "getHistory", null);
 __decorate([
     (0, common_1.Get)('history/:id'),
+    (0, response_message_decorator_1.ResponseMessage)('Quiz history detail fetched successfully'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], QuizController.prototype, "getHistoryDetail", null);
 exports.QuizController = QuizController = __decorate([
     (0, common_1.Controller)('quiz'),

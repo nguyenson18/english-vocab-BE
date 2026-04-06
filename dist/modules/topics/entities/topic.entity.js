@@ -11,8 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Topic = void 0;
 const typeorm_1 = require("typeorm");
-const vocabulary_entity_1 = require("../../vocabularies/entities/vocabulary.entity");
+const conversation_entity_1 = require("../../conversations/entities/conversation.entity");
+const passage_entity_1 = require("../../passages/entities/passage.entity");
 const quiz_attempt_entity_1 = require("../../quiz/entities/quiz-attempt.entity");
+const vocabulary_entity_1 = require("../../vocabularies/entities/vocabulary.entity");
 let Topic = class Topic {
 };
 exports.Topic = Topic;
@@ -36,6 +38,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => vocabulary_entity_1.Vocabulary, (vocabulary) => vocabulary.topic),
     __metadata("design:type", Array)
 ], Topic.prototype, "vocabularies", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => conversation_entity_1.Conversation, (conversation) => conversation.topic),
+    __metadata("design:type", Array)
+], Topic.prototype, "conversations", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => passage_entity_1.Passage, (passage) => passage.topic),
+    __metadata("design:type", Array)
+], Topic.prototype, "passages", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => quiz_attempt_entity_1.QuizAttempt, (quizAttempt) => quizAttempt.topic),
     __metadata("design:type", Array)

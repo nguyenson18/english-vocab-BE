@@ -14,106 +14,83 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VocabulariesController = void 0;
 const common_1 = require("@nestjs/common");
-const vocabularies_service_1 = require("./vocabularies.service");
+const response_message_decorator_1 = require("../../common/interceptors/response-message.decorator");
 const create_vocabulary_dto_1 = require("./dto/create-vocabulary.dto");
-const update_vocabulary_dto_1 = require("./dto/update-vocabulary.dto");
 const query_vocabulary_dto_1 = require("./dto/query-vocabulary.dto");
+const update_vocabulary_dto_1 = require("./dto/update-vocabulary.dto");
+const vocabularies_service_1 = require("./vocabularies.service");
 let VocabulariesController = class VocabulariesController {
     constructor(vocabulariesService) {
         this.vocabulariesService = vocabulariesService;
     }
-    async create(createVocabularyDto) {
-        const data = await this.vocabulariesService.create(createVocabularyDto);
-        return {
-            success: true,
-            message: 'Vocabulary created successfully',
-            data,
-        };
+    create(createVocabularyDto) {
+        return this.vocabulariesService.create(createVocabularyDto);
     }
-    async findAll(query) {
-        const data = await this.vocabulariesService.findAll(query);
-        return {
-            success: true,
-            message: 'Vocabularies fetched successfully',
-            data,
-        };
+    findAll(query) {
+        return this.vocabulariesService.findAll(query);
     }
-    async findByTopic(topicId) {
-        const data = await this.vocabulariesService.findByTopic(topicId);
-        return {
-            success: true,
-            message: 'Topic vocabularies fetched successfully',
-            data,
-        };
+    findByTopic(topicId) {
+        return this.vocabulariesService.findByTopic(topicId);
     }
-    async findOne(id) {
-        const data = await this.vocabulariesService.findOne(id);
-        return {
-            success: true,
-            message: 'Vocabulary fetched successfully',
-            data,
-        };
+    findOne(id) {
+        return this.vocabulariesService.findOne(id);
     }
-    async update(id, updateVocabularyDto) {
-        const data = await this.vocabulariesService.update(id, updateVocabularyDto);
-        return {
-            success: true,
-            message: 'Vocabulary updated successfully',
-            data,
-        };
+    update(id, updateVocabularyDto) {
+        return this.vocabulariesService.update(id, updateVocabularyDto);
     }
-    async remove(id) {
-        const data = await this.vocabulariesService.remove(id);
-        return {
-            success: true,
-            message: 'Vocabulary deleted successfully',
-            data,
-        };
+    remove(id) {
+        return this.vocabulariesService.remove(id);
     }
 };
 exports.VocabulariesController = VocabulariesController;
 __decorate([
     (0, common_1.Post)(),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary created successfully'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_vocabulary_dto_1.CreateVocabularyDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabularies fetched successfully'),
     __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [query_vocabulary_dto_1.QueryVocabularyDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('topic/:topicId'),
+    (0, response_message_decorator_1.ResponseMessage)('Topic vocabularies fetched successfully'),
     __param(0, (0, common_1.Param)('topicId')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "findByTopic", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary fetched successfully'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary updated successfully'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_vocabulary_dto_1.UpdateVocabularyDto]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary deleted successfully'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "remove", null);
 exports.VocabulariesController = VocabulariesController = __decorate([
     (0, common_1.Controller)('vocabularies'),
