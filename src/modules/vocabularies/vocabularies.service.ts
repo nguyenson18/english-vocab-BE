@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 import { Vocabulary } from './entities/vocabulary.entity';
@@ -6,6 +10,7 @@ import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 import { QueryVocabularyDto } from './dto/query-vocabulary.dto';
 import { TopicsService } from '../topics/topics.service';
+import { CloudinaryService } from '../../common/cloudinary/cloudinary.service';
 
 @Injectable()
 export class VocabulariesService {
@@ -13,6 +18,7 @@ export class VocabulariesService {
     @InjectRepository(Vocabulary)
     private readonly vocabularyRepository: Repository<Vocabulary>,
     private readonly topicsService: TopicsService,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   async create(createVocabularyDto: CreateVocabularyDto) {
@@ -40,32 +46,22 @@ export class VocabulariesService {
             vietnameseMeaning: ILike(`%${query.keyword}%`),
           },
         ],
-        order: {
-          createdAt: 'DESC',
-        },
-        relations: {
-          topic: true,
-        },
+        order: { createdAt: 'DESC' },
+        relations: { topic: true },
       });
     }
 
     return this.vocabularyRepository.find({
       where,
-      order: {
-        createdAt: 'DESC',
-      },
-      relations: {
-        topic: true,
-      },
+      order: { createdAt: 'DESC' },
+      relations: { topic: true },
     });
   }
 
   async findOne(id: string) {
     const vocabulary = await this.vocabularyRepository.findOne({
       where: { id },
-      relations: {
-        topic: true,
-      },
+      relations: { topic: true },
     });
 
     if (!vocabulary) {
@@ -88,6 +84,11 @@ export class VocabulariesService {
 
   async remove(id: string) {
     const vocabulary = await this.findOne(id);
+
+    if (vocabulary.imagePublicId) {
+      await this.cloudinaryService.deleteImage(vocabulary.imagePublicId);
+    }
+
     await this.vocabularyRepository.remove(vocabulary);
     return { id };
   }
@@ -97,9 +98,47 @@ export class VocabulariesService {
 
     return this.vocabularyRepository.find({
       where: { topicId },
-      order: {
-        createdAt: 'DESC',
-      },
+      order: { createdAt: 'DESC' },
     });
+  }
+
+  async uploadImage(id: string, file: Express.Multer.File) {
+    const vocabulary = await this.findOne(id);
+
+    if (!file) {
+      throw new BadRequestException('Image file is required');
+    }
+
+    if (!file.mimetype.startsWith('image/')) {
+      throw new BadRequestException('Only image files are allowed');
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      throw new BadRequestException('Image size must be less than 5MB');
+    }
+
+    if (vocabulary.imagePublicId) {
+      await this.cloudinaryService.deleteImage(vocabulary.imagePublicId);
+    }
+
+    const uploaded = await this.cloudinaryService.uploadImage(file);
+
+    vocabulary.imageUrl = uploaded.secure_url;
+    vocabulary.imagePublicId = uploaded.public_id;
+
+    return this.vocabularyRepository.save(vocabulary);
+  }
+
+  async removeImage(id: string) {
+    const vocabulary = await this.findOne(id);
+
+    if (vocabulary.imagePublicId) {
+      await this.cloudinaryService.deleteImage(vocabulary.imagePublicId);
+    }
+
+    vocabulary.imageUrl = null;
+    vocabulary.imagePublicId = null;
+
+    return this.vocabularyRepository.save(vocabulary);
   }
 }

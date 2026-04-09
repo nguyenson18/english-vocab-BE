@@ -7,4 +7,5 @@ export declare class CreateVocabularyDto {
     exampleEn?: string;
     exampleVi?: string;
     note?: string;
+    imageUrl?: string;
 }

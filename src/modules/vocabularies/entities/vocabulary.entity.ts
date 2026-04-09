@@ -13,7 +13,6 @@ import { QuizAttemptDetail } from '../../quiz/entities/quiz-attempt-detail.entit
 import { UserVocabularyProgress } from '../../progress/entities/user-vocabulary-progress.entity';
 
 @Entity('vocabularies')
-@Entity('vocabularies')
 export class Vocabulary {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -47,6 +46,12 @@ export class Vocabulary {
 
   @Column({ type: 'text', nullable: true })
   note: string | null;
+
+  @Column({ type: 'varchar', length: 500, nullable: true })
+  imageUrl: string | null;
+
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  imagePublicId: string | null;
 
   @OneToMany(() => QuizAttemptDetail, (detail) => detail.vocabulary)
   quizAttemptDetails: QuizAttemptDetail[];

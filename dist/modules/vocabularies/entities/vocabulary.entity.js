@@ -61,6 +61,14 @@ __decorate([
     __metadata("design:type", Object)
 ], Vocabulary.prototype, "note", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 500, nullable: true }),
+    __metadata("design:type", Object)
+], Vocabulary.prototype, "imageUrl", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'varchar', length: 255, nullable: true }),
+    __metadata("design:type", Object)
+], Vocabulary.prototype, "imagePublicId", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => quiz_attempt_detail_entity_1.QuizAttemptDetail, (detail) => detail.vocabulary),
     __metadata("design:type", Array)
 ], Vocabulary.prototype, "quizAttemptDetails", void 0);
@@ -77,7 +85,6 @@ __decorate([
     __metadata("design:type", Date)
 ], Vocabulary.prototype, "updatedAt", void 0);
 exports.Vocabulary = Vocabulary = __decorate([
-    (0, typeorm_1.Entity)('vocabularies'),
     (0, typeorm_1.Entity)('vocabularies')
 ], Vocabulary);
 //# sourceMappingURL=vocabulary.entity.js.map

@@ -55,4 +55,8 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateVocabularyDto.prototype, "note", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateVocabularyDto.prototype, "imageUrl", void 0);
 //# sourceMappingURL=create-vocabulary.dto.js.map

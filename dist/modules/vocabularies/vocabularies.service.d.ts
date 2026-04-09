@@ -4,10 +4,12 @@ import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 import { QueryVocabularyDto } from './dto/query-vocabulary.dto';
 import { TopicsService } from '../topics/topics.service';
+import { CloudinaryService } from '../../common/cloudinary/cloudinary.service';
 export declare class VocabulariesService {
     private readonly vocabularyRepository;
     private readonly topicsService;
-    constructor(vocabularyRepository: Repository<Vocabulary>, topicsService: TopicsService);
+    private readonly cloudinaryService;
+    constructor(vocabularyRepository: Repository<Vocabulary>, topicsService: TopicsService, cloudinaryService: CloudinaryService);
     create(createVocabularyDto: CreateVocabularyDto): Promise<Vocabulary>;
     findAll(query: QueryVocabularyDto): Promise<Vocabulary[]>;
     findOne(id: string): Promise<Vocabulary>;
@@ -16,4 +18,6 @@ export declare class VocabulariesService {
         id: string;
     }>;
     findByTopic(topicId: string): Promise<Vocabulary[]>;
+    uploadImage(id: string, file: Express.Multer.File): Promise<Vocabulary>;
+    removeImage(id: string): Promise<Vocabulary>;
 }

@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import { IsOptional, IsString, IsUUID, IsUrl, MaxLength } from 'class-validator';
 
 export class CreateVocabularyDto {
   @IsUUID()
@@ -33,4 +33,7 @@ export class CreateVocabularyDto {
   @IsOptional()
   @IsString()
   note?: string;
+
+  @IsOptional()
+  imageUrl?: string;
 }

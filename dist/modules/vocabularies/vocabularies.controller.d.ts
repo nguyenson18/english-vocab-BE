@@ -10,6 +10,8 @@ export declare class VocabulariesController {
     findByTopic(topicId: string): Promise<import("./entities/vocabulary.entity").Vocabulary[]>;
     findOne(id: string): Promise<import("./entities/vocabulary.entity").Vocabulary>;
     update(id: string, updateVocabularyDto: UpdateVocabularyDto): Promise<import("./entities/vocabulary.entity").Vocabulary>;
+    uploadImage(id: string, file: Express.Multer.File): Promise<import("./entities/vocabulary.entity").Vocabulary>;
+    removeImage(id: string): Promise<import("./entities/vocabulary.entity").Vocabulary>;
     remove(id: string): Promise<{
         id: string;
     }>;

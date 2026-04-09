@@ -14,6 +14,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.VocabulariesController = void 0;
 const common_1 = require("@nestjs/common");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 const response_message_decorator_1 = require("../../common/interceptors/response-message.decorator");
 const create_vocabulary_dto_1 = require("./dto/create-vocabulary.dto");
 const query_vocabulary_dto_1 = require("./dto/query-vocabulary.dto");
@@ -37,6 +39,12 @@ let VocabulariesController = class VocabulariesController {
     }
     update(id, updateVocabularyDto) {
         return this.vocabulariesService.update(id, updateVocabularyDto);
+    }
+    uploadImage(id, file) {
+        return this.vocabulariesService.uploadImage(id, file);
+    }
+    removeImage(id) {
+        return this.vocabulariesService.removeImage(id);
     }
     remove(id) {
         return this.vocabulariesService.remove(id);
@@ -84,6 +92,26 @@ __decorate([
     __metadata("design:paramtypes", [String, update_vocabulary_dto_1.UpdateVocabularyDto]),
     __metadata("design:returntype", void 0)
 ], VocabulariesController.prototype, "update", null);
+__decorate([
+    (0, common_1.Patch)(':id/image'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+        storage: (0, multer_1.memoryStorage)(),
+    })),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary image uploaded successfully'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.UploadedFile)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], VocabulariesController.prototype, "uploadImage", null);
+__decorate([
+    (0, common_1.Delete)(':id/image'),
+    (0, response_message_decorator_1.ResponseMessage)('Vocabulary image removed successfully'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], VocabulariesController.prototype, "removeImage", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     (0, response_message_decorator_1.ResponseMessage)('Vocabulary deleted successfully'),

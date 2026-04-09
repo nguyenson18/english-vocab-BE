@@ -13,6 +13,7 @@ const vocabulary_entity_1 = require("./entities/vocabulary.entity");
 const vocabularies_service_1 = require("./vocabularies.service");
 const vocabularies_controller_1 = require("./vocabularies.controller");
 const topics_module_1 = require("../topics/topics.module");
+const cloudinary_service_1 = require("../../common/cloudinary/cloudinary.service");
 let VocabulariesModule = class VocabulariesModule {
 };
 exports.VocabulariesModule = VocabulariesModule;
@@ -20,7 +21,7 @@ exports.VocabulariesModule = VocabulariesModule = __decorate([
     (0, common_1.Module)({
         imports: [typeorm_1.TypeOrmModule.forFeature([vocabulary_entity_1.Vocabulary]), topics_module_1.TopicsModule],
         controllers: [vocabularies_controller_1.VocabulariesController],
-        providers: [vocabularies_service_1.VocabulariesService],
+        providers: [vocabularies_service_1.VocabulariesService, cloudinary_service_1.CloudinaryService],
         exports: [vocabularies_service_1.VocabulariesService, typeorm_1.TypeOrmModule],
     })
 ], VocabulariesModule);

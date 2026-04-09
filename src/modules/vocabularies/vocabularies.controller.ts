@@ -7,7 +7,11 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
 import { ResponseMessage } from '../../common/interceptors/response-message.decorator';
 import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { QueryVocabularyDto } from './dto/query-vocabulary.dto';
@@ -49,6 +53,26 @@ export class VocabulariesController {
     @Body() updateVocabularyDto: UpdateVocabularyDto,
   ) {
     return this.vocabulariesService.update(id, updateVocabularyDto);
+  }
+
+  @Patch(':id/image')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: memoryStorage(),
+    }),
+  )
+  @ResponseMessage('Vocabulary image uploaded successfully')
+  uploadImage(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.vocabulariesService.uploadImage(id, file);
+  }
+
+  @Delete(':id/image')
+  @ResponseMessage('Vocabulary image removed successfully')
+  removeImage(@Param('id') id: string) {
+    return this.vocabulariesService.removeImage(id);
   }
 
   @Delete(':id')

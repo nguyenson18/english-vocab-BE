@@ -12,6 +12,8 @@ export declare class Vocabulary {
     exampleEn: string | null;
     exampleVi: string | null;
     note: string | null;
+    imageUrl: string | null;
+    imagePublicId: string | null;
     quizAttemptDetails: QuizAttemptDetail[];
     progressRecords: UserVocabularyProgress[];
     createdAt: Date;
