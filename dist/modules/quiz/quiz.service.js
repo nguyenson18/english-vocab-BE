@@ -38,7 +38,7 @@ let QuizService = class QuizService {
             throw new common_1.NotFoundException('This topic has no vocabulary');
         }
         const shuffled = [...vocabularies].sort(() => Math.random() - 0.5);
-        const selected = shuffled.slice(0, startQuizDto.limit || 10);
+        const selected = shuffled.slice(0, startQuizDto.limit || 50);
         return Promise.all(selected.map(async (item) => {
             const distractors = vocabularies
                 .filter((vocabulary) => vocabulary.id !== item.id)

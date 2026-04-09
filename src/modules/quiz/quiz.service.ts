@@ -34,7 +34,7 @@ export class QuizService {
     }
 
     const shuffled = [...vocabularies].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, startQuizDto.limit || 10);
+    const selected = shuffled.slice(0, startQuizDto.limit || 50);
 
     return Promise.all(
       selected.map(async (item) => {
